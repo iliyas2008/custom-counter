@@ -1,22 +1,9 @@
 import './App.css';
-import React, { useState } from 'react';
-
+import React, { useReducer }  from 'react';
+import { counterReducer, initialState } from './reducer';
 
 function App() {
-  const [counter, setCounter] = useState(0)
-
-  const handlePlus = ()=>{
-    if(counter<20){
-      setCounter(counter+1)
-    }else{
-      setCounter(0)
-    }
-  }
-  const handleMinus = ()=>{
-    if(counter>0){
-      setCounter(counter-1)
-    }
-  }
+  const [state, dispatch] = useReducer(counterReducer, initialState);
   return (
     <div className="App">
       <header className="App-header">
@@ -24,9 +11,9 @@ function App() {
         <h3>Counter works from 0 through 20 (above or below will reset to zero)</h3>
       </header>
       <section className="App-body">
-        <button onClick={handlePlus} className="btn">+</button>
-          <h2>{counter}</h2>
-        <button onClick={handleMinus} className="btn">-</button>
+        <button onClick={()=>dispatch({type: "increment"})} className="btn">+</button>
+          <h2>{state.counter}</h2>
+        <button onClick={()=>dispatch({type: "decrement"})} className="btn">-</button>
       </section>
     </div>
   );
